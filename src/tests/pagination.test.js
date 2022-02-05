@@ -1,10 +1,12 @@
 const chai = require('chai');
 const { expect } = require('chai');
 const chaiHttp = require('chai-http');
+const chaiUuid = require('chai-uuid');
 
 const server = require('../api/app');
 
 chai.use(chaiHttp);
+chai.use(chaiUuid);
 
 describe('GET /pagination', () => {
   describe(('Quando os parâmetros corretos não são enviados'), () => {
@@ -137,9 +139,13 @@ describe('GET /pagination', () => {
       it('Retorna status 200', () => {
         expect(response).to.have.status(200);
       });
+
+      it('Retorna uuid válido', () => {
+        expect(response.body.uuid).to.be.a.uuid('v4');
+      });
   
       it('Para "current" = 3 e "total"= 5 retorna array correto', () => {
-        expect(response.body).to.be.deep.equal({ pagination: expectedResult });
+        expect(response.body.pagination).to.be.deep.equal(expectedResult);
       });
     });
 
@@ -170,9 +176,13 @@ describe('GET /pagination', () => {
           it('Retorna status 200', () => {
             expect(response).to.have.status(200);
           });
+
+          it('Retorna uuid válido', () => {
+            expect(response.body.uuid).to.be.a.uuid('v4');
+          });
       
           it('Retorna array correto', () => {
-            expect(response.body).to.be.deep.equal({ pagination: expectedResults[counter - 1] });
+            expect(response.body.pagination).to.be.deep.equal(expectedResults[counter - 1]);
           });
         });
       };
