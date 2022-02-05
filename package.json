@@ -1,0 +1,16 @@
+{
+  "name": "rarolabs",
+  "version": "1.0.0",
+  "description": "Desafio Técnico Raro Labs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/api/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "kevin.zero@hotmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2",
+    "http-status-codes": "^2.2.0"
+  }
+}
