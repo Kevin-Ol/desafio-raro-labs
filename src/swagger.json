@@ -1,0 +1,111 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API de paginação",
+    "description": "API criada como desafio técnico do processo seletivo Raro Labs",
+    "contact": {
+      "email": "kevin.zero@hotmail.com",
+      "github": "github.com/kevin-ol"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/v1",
+      "description": "API de desenvolvimento"
+    },
+    {
+      "url": "https://kevin-ol-rarolabs.herokuapp.com/v1",
+      "description": "API de produção"
+    }
+  ],
+  "paths" :{
+    "/pagination": {
+      "get": {
+        "summary": "Rota de paginação",
+        "description": "Essa rota retorna um array com até 5 números de páginas dependendo dos valores inseridos nos parâmetros da url",
+        "tags": ["Pagination"],
+        "parameters": [
+          {
+            "name": "current",
+            "in": "query",
+            "example": "2",
+            "description": "Valor da página atual",
+            "required": true            
+          },
+          {
+            "name": "total",
+            "in": "query",
+            "example": "10",
+            "description": "Quantidade total de páginas",
+            "required": true            
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Parâmetros das páginas não inseridos ou inválidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Retorna array com a paginação desejada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "$ref": "#/components/schemas/Pagination"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Pagination": {
+        "type": "object",
+        "properties": {
+          "uuid": {
+            "type": "string",
+            "example": "03966c5b-33fc-439e-9b84-15a8c27f0854"
+          },
+          "pagination": {
+            "type": "array",
+            "example": ["1", "2", "**3**", "4", "5", "..."],
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
